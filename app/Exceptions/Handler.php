@@ -8,6 +8,8 @@ use Illuminate\Contracts\Queue\EntityNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Auth\Access\AuthorizationException;
+
 use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,6 +48,15 @@ class Handler extends ExceptionHandler
     public function render($request, Exception|Throwable $e): \Illuminate\Http\Response|JsonResponse|Response
     {
         if ($request->is('api/*')) {
+            if ($e instanceof AuthorizationException) {
+                return response()->json(
+                    [
+                        'status' => "error",
+                        'message' => trans('validation.messages.entity_for_bidden'),
+                        'code' => HttpStatusCodeEnum::FORBIDDEN],
+                    HttpStatusCodeEnum::FORBIDDEN
+                );
+            }
 
             if ($e instanceof ModelNotFoundException) {
                 return response()->json(
@@ -106,4 +117,5 @@ class Handler extends ExceptionHandler
         }
         return parent::render($request, $e);
     }
+
 }

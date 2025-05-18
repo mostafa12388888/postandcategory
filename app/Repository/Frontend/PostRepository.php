@@ -20,20 +20,6 @@ class PostRepository extends MainRepository
         return Post::class;
     }
     /**
-     * index
-     *
-     * @return mixed
-     */
-    /**
-     * index
-     *
-     * @return mixed
-     */
-    public function index():mixed
-    {
-        return $this->model->where('user_id',auth()->user()->id)->with('images')->latest()->get();
-    }
-    /**
      * getPostWithComments
      *
      * @param  mixed $slug
@@ -47,21 +33,6 @@ class PostRepository extends MainRepository
         ->whereSlug($slug)
         ->firstOrFail();
     }
-
-    /**
-     * getCategoryPosts
-     *
-     * @param  mixed $categoryId
-     * @return void
-     */
-    public function getCategoryPosts($categoryId):mixed
-    {
-        return $this->model->where('category_id', $categoryId)
-                    ->latest()
-                    ->limit(5)
-                    ->get();
-    }
-
     /**
      * incrementPostViews
      *

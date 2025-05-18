@@ -37,7 +37,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $posts = $this->service->index();
+        $posts = $this->service->findAll(['user_id'=>auth()->user()->id],['images']);
         return view('frontEnd.dashboard.profile', compact('posts'));
     }
     /**

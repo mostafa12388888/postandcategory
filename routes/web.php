@@ -5,13 +5,11 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\RoleController;
 use App\Http\Controllers\Auth\UserController;
-use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Frontend\AdminController;
 use App\Http\Controllers\Frontend\CategoryController;
 use App\Http\Controllers\frontend\dashboard\ProfileController;
 use App\Http\Controllers\frontend\dashboard\SettingController;
 use App\Http\Controllers\Frontend\HomeController;
-use App\Http\Controllers\Frontend\NewSubscriberController;
 use App\Http\Controllers\frontend\PostController;
 use App\Http\Controllers\Frontend\SearchController;
 /*
@@ -25,9 +23,6 @@ use App\Http\Controllers\Frontend\SearchController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -92,11 +87,7 @@ Route::group(['as' => 'frontend.'], function () {
 
 
 
-// Route::prefix('email')->controller(VerificationController::class)->name('verification.')->group(function () {
-//     Route::get('/verify', 'show')->name('notice');
-//     Route::get('/verify/{id}/{hash}', 'verify')->name('verify');
-//     Route::post('/resend', 'resend')->name('resend');
-// });
+
 //////////////////////
 //////////////////////
 //////////////////////

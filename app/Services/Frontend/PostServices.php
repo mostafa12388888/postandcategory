@@ -48,7 +48,7 @@ class PostServices extends MainService
     {
 
         $post = $this->add([
-            'user_id' => auth()->user()->id??1,
+            'user_id' => auth()->user()->id ?? 1,
             'category_id' => $data['categoryId'],
             'comment_able' => $data['commentAble'] == "on" ? 1 : 0,
             'desc' => $data['desc'],
@@ -68,9 +68,8 @@ class PostServices extends MainService
      */
     public function updatePost(int $id, array $data): mixed
     {
-        $post = $this->findOrFail($id);
 
-        return $this->update($id, [
+        $post = $this->update($id, [
             'category_id' => $data['categoryId'],
             'comment_able' => $data['commentAble'] == "on" ? 1 : 0,
             'desc' => $data['desc'],
@@ -141,18 +140,18 @@ class PostServices extends MainService
      *
      * @return mixed
      */
-    public function allCategory():mixed
+    public function allCategory(): mixed
     {
-       return app(CategoryServices::class)->index();
+        return app(CategoryServices::class)->index();
     }
     /**
      * allCategoryPostLimit
      *
      * @return mixed
      */
-    public function allCategoryPostLimit():mixed
+    public function allCategoryPostLimit(): mixed
     {
-       return app(CategoryServices::class)->categoryPostLimit();
+        return app(CategoryServices::class)->categoryPostLimit();
     }
     /**
      * incrementPostViews

@@ -99,7 +99,9 @@ class PostController extends Controller
      */
     public function editPost(CreatePostRequest $request, $id): JsonResponse
     {
-        $resource = $this->service->updatePost($id, $request->all());
+        $post = $this->service->findOrFail($id);
+        $this->authorize('update', $post);
+        $resource = $this->service->updatePost($post->id, $request->all());
         return $this->response(PostResource::make($resource), HttpStatusCodeEnum::OK);
     }
     /**
@@ -110,6 +112,8 @@ class PostController extends Controller
      */
     public function deletePost($id): JsonResponse
     {
+        $post = $this->service->findOrFail($id);
+        $this->authorize('delete', $post);
         $this->service->deletePost($id);
         return $this->response([], HttpStatusCodeEnum::OK);
     }

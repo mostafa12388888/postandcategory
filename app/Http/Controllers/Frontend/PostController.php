@@ -32,8 +32,8 @@ class PostController extends Controller
      */
     public function show($slug)
     {
-        $mainPost=$this->service->getPostWithComments($slug);
-       $category_posts= $this->service->getCategoryPosts( $mainPost->category_id);
+        $mainPost = $this->service->getPostWithComments($slug);
+        $category_posts = $this->service->findAll(['category_id' => $mainPost->category_id], limit: 5);
         $this->service->incrementPostViews($mainPost->id);
         return view('frontEnd.show', compact('mainPost', 'category_posts'));
     }
@@ -45,7 +45,7 @@ class PostController extends Controller
      */
     public function getAllComments($slug)
     {
-        $post=$this->service->firstOrFailBy(["slug" => $slug], ["comments"]);
+        $post = $this->service->firstOrFailBy(["slug" => $slug], ["comments"]);
         $comments = $post->comments()->with('user')->get();
         return response()->json($comments);
     }

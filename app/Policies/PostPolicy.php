@@ -9,7 +9,7 @@ class PostPolicy
 {
     public function update(User $user, Post $post): bool
     {
-        return $user->id === $post->user_id || $user->can('edit posts');
+        return auth()->user()->id === $post->user_id || $user->can('edit posts');
     }
 
     public function delete(User $user, Post $post): bool
