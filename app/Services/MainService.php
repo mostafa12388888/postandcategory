@@ -61,10 +61,10 @@ class MainService
      * @return mixed
      * @throws Throwable
      */
-    public function firstOrFailBy(array $filters = [], array $with = [], array $withCount=[], array $columns = ['*']): mixed
+    public function firstOrFailBy(array $filters = [], array $with = [], array $withCount = [], array $columns = ['*']): mixed
     {
         return $this->applyTransaction(function () use ($filters, $with, $withCount,  $columns) {
-            return $this->repository->firstOrFailBy($filters, $with, $withCount ,$columns);
+            return $this->repository->firstOrFailBy($filters, $with, $withCount, $columns);
         });
     }
 
@@ -76,10 +76,10 @@ class MainService
      * @return mixed
      * @throws Throwable
      */
-    public function firstBy(array $filters = [], array $with = [], array $withCount=[], array $columns = ['*']): mixed
+    public function firstBy(array $filters = [], array $with = [], array $withCount = [], array $columns = ['*']): mixed
     {
         return $this->applyTransaction(function () use ($filters, $with, $withCount,  $columns) {
-            return $this->repository->firstBy($filters, $with, $withCount ,$columns);
+            return $this->repository->firstBy($filters, $with, $withCount, $columns);
         });
     }
 
@@ -101,13 +101,24 @@ class MainService
      * @param array $columns
      * @return mixed
      */
-    public function findAll(array $filters = [], array $with = [], string $orderBy = 'created_at', string $direction = 'DESC', array $columns = ['*']): mixed
+    public function findAll(array $filters = [], array $with = [], array $withCount = [], string $orderBy = 'created_at', string $direction = 'DESC', array $columns = ['*'], int $limit = 0): mixed
     {
-        return $this->repository->findAll($filters, $with, $orderBy, $direction, $columns);
+        return $this->repository->findAll($filters, $with, $withCount, $orderBy, $direction, $columns, $limit);
     }
-    public function allData($page,$perPage,array $with = [], string $orderBy = 'created_at', string $direction = 'DESC', array $columns = ['*']): mixed
+    /**
+     * allData
+     *
+     * @param  mixed $page
+     * @param  mixed $perPage
+     * @param  mixed $with
+     * @param  mixed $orderBy
+     * @param  mixed $direction
+     * @param  mixed $columns
+     * @return mixed
+     */
+    public function allData($page, $perPage, array $with = [], string $orderBy = 'created_at', string $direction = 'DESC', array $columns = ['*']): mixed
     {
-        return $this->repository->allData($page,$perPage,$with, $orderBy, $direction, $columns);
+        return $this->repository->allData($page, $perPage, $with, $orderBy, $direction, $columns);
     }
 
 
@@ -240,6 +251,4 @@ class MainService
             return $this->repository->deleteOne($id);
         });
     }
-
-
 }

@@ -24,8 +24,23 @@ class CategoryServices extends MainService
         $this->repository = $repository;
         parent::__construct($repository);
     }
-    public function index(){
+    /**
+     * index
+     *
+     * @return mixed
+     */
+    public function index():mixed
+    {
         return $this->repository->index();
+    }
+    /**
+     * categoryPostLimit
+     *
+     * @return mixed
+     */
+    public function categoryPostLimit():mixed
+    {
+        return $this->repository->categoryPostLimit();
     }
 
 

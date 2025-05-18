@@ -58,8 +58,8 @@ Route::group(['as' => 'frontend.'], function () {
 
     Route::get('category/{slug}', CategoryController::class)->name('category.posts');
     Route::prefix('post')->controller(PostController::class)->group(function () {
-        Route::get('/{slug}', 'show')->name('post.show');
-        Route::get('/comment/{slug}', 'getAllComments')->name('comment.show');
+        Route::get('/{slug}', 'show')->middleware('auth:sanctum')->name('post.show');
+        Route::get('/comment/{slug}', 'getAllComments')->middleware('auth:sanctum')->name('comment.show');
         Route::post('/comment', 'store')->name('comment.store');
     });
     Route::match(['get', 'post'], '/search', SearchController::class)->name('search');

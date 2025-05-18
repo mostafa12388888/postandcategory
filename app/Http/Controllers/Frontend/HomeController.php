@@ -2,24 +2,52 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Enum\PaginationEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
+use App\Services\Frontend\PostServices;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    function index() {
-        $posts=Post::with('images')->select('id','title','slug')->latest()->paginate(9);
-        $grate_of_views=Post::with('images')->select('id','title','slug')->orderBy('number_of_views','desc')->limit(3)->get();
-        $oldestNews=Post::with('images')->select('id','title','slug')->oldest()->take(3)->get();
-         $gratePostComments=Post::with('images')->select('id','title','slug')->withCount('comments')->orderBy('comments_count','desc')->take(3)->get();
-        $categories = Category::all();
-        $categoryWithPost=$categories->map(function($category){
-                $category->posts = $category->posts()->limit(5)->get();
-                return $category;
-            }
+    /**
+     * service
+     *
+     * @var PostServices
+     */
+    protected PostServices $service;
+    /**
+     * __construct
+     *
+     * @param  mixed $service
+     * @return void
+     */
+    public function __construct(PostServices $service)
+    {
+        $this->service = $service;
+    }
+    /**
+     * index
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    function index(Request $request)
+    {
+
+        $posts = $this->service->allData(
+            $request->get("page", PaginationEnum::PAGE),
+            $request->get("perPage", PaginationEnum::LIMIT),
+            ['images'],
+            columns: ['id', 'title', 'slug']
         );
-        return view('frontend.index',compact('posts','grate_of_views','oldestNews','gratePostComments','categories','categoryWithPost'));
+        $grate_of_views = $this->service->findAll(with: ['images'], columns: ['id', 'title', 'slug'], orderBy: 'number_of_views', limit: 3);
+        $oldestNews = $this->service->findAll(with: ['images'], columns: ['id', 'title', 'slug'], limit: 3);
+        $gratePostComments = $this->service->findAll(with: ['images'], withCount: ['comments'], columns: ['id', 'title', 'slug'], orderBy: 'comments_count', limit: 3);
+        $categories = $this->service->allCategory();
+        $categoryWithPost = $this->service->allCategoryPostLimit();
+
+        return view('frontend.index', compact('posts', 'grate_of_views', 'oldestNews', 'gratePostComments', 'categories', 'categoryWithPost'));
     }
 }

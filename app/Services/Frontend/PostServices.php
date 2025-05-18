@@ -69,7 +69,7 @@ class PostServices extends MainService
     public function updatePost(int $id, array $data): mixed
     {
         $post = $this->findOrFail($id);
-        
+
         return $this->update($id, [
             'category_id' => $data['categoryId'],
             'comment_able' => $data['commentAble'] == "on" ? 1 : 0,
@@ -135,6 +135,24 @@ class PostServices extends MainService
     public function getCategoryPosts($categoryId): mixed
     {
         return $this->repository->getCategoryPosts($categoryId);
+    }
+    /**
+     * allCategory
+     *
+     * @return mixed
+     */
+    public function allCategory():mixed
+    {
+       return app(CategoryServices::class)->index();
+    }
+    /**
+     * allCategoryPostLimit
+     *
+     * @return mixed
+     */
+    public function allCategoryPostLimit():mixed
+    {
+       return app(CategoryServices::class)->categoryPostLimit();
     }
     /**
      * incrementPostViews

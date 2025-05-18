@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Helpers\FileHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Permission\userAdminRequest;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
@@ -42,25 +43,9 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(userAdminRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|same:confirm-password',
-            'userName' => ['required', 'unique:users,user_name', 'string', 'max:50'],
-            'country' => ['nullable', 'string', 'max:255'],
-            'city' => ['nullable', 'string', 'max:255'],
-            'street' => ['nullable', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:16', 'unique:users'],
-            'roles_name' => 'required',
-            'role' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        ]);
-
         $input = $request->all();
-
-
         $input['password'] = Hash::make($input['password']);
         $file = FileHelper::uploadFile($request->image, 'userImage');
 
@@ -112,20 +97,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(userAdminRequest $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'password' => 'same:confirm-password',
-            'userName' => ['required', 'unique:users,user_name', 'string', 'max:50'],
-            'country' => ['nullable', 'string', 'max:255'],
-            'city' => ['nullable', 'string', 'max:255'],
-            'street' => ['nullable', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:16', 'unique:users'],
-            'roles_name' => 'required',
-            'role' => 'required',
-        ]);
         $input = $request->all();
         if (!empty($input['password'])) {
             $input['password'] = Hash::make($input['password']);

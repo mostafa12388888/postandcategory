@@ -4,6 +4,7 @@ namespace App\Services\Auth;
 
 use App\Helpers\FileHelper;
 use App\Models\User;
+use App\Services\Frontend\UserServices;
 use Illuminate\Support\Facades\Hash;
 
 class RegisterService
@@ -17,7 +18,6 @@ class RegisterService
     public function createUser(array $data): User
     {
         $file = FileHelper::uploadFile($data['image'], 'userImage');
-
         return User::create([
             'name' => $data['name'],
             'user_name' => $data['userName'],

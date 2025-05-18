@@ -175,14 +175,17 @@ abstract class MainRepository
      * @param array $columns
      * @return mixed
      */
-    public function findAll(array $filters = [], array $with = [], string $orderBy = 'created_at', string $direction = 'DESC', array $columns = ['*']): mixed
+    public function findAll(array $filters = [], array $with = [], array $withCount = [], string $orderBy = 'created_at', string $direction = 'DESC', array $columns = ['*'], int $limit = 0): mixed
     {
-        return $this->model
+        $query = $this->model
             ->where($filters)
             ->with($with)
             ->select($columns)
-            ->orderBy($orderBy, $direction)
-            ->get();
+            ->withCount($withCount)
+            ->orderBy($orderBy, $direction);
+        if ($limit)
+            $query->limit($limit);
+        return $query->get();
     }
     /**
      * allData
@@ -194,7 +197,7 @@ abstract class MainRepository
      * @param  mixed $columns
      * @return mixed
      */
-    public function allData($page,$perPage, array $with = [], string $orderBy = 'created_at', string $direction = 'DESC', array $columns = ['*']): mixed
+    public function allData($page, $perPage, array $with = [], string $orderBy = 'created_at', string $direction = 'DESC', array $columns = ['*']): mixed
     {
         return $this->model
             ->with($with)

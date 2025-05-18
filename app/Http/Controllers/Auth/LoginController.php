@@ -11,6 +11,12 @@ class LoginController extends Controller
 {
     protected LoginService $loginService;
 
+    /**
+     * __construct
+     *
+     * @param  mixed $loginService
+     * @return void
+     */
     public function __construct(LoginService $loginService)
     {
         $this->loginService = $loginService;

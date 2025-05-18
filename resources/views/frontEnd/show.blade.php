@@ -55,7 +55,7 @@
 
                                     <input id="commentInput" name="comment" type="text" placeholder="Add a comment..."
                                         id="commentBox" />
-                                    <input name="userId" type="hidden" value="{{ auth('web')->user()->id }}" />
+                                    <input name="userId" type="hidden" value="{{ auth()->user()?->id }}" />
                                     <input name="postId" type="hidden" value="{{ $mainPost->id }}" />
                                     <button id="addCommentBtn" type="submit">Comment</button>
                                 </div>

@@ -9,10 +9,10 @@
         <aside class="col-md-3 nav-sticky dashboard-sidebar">
             <!-- User Info Section -->
             <div class="user-info text-center p-3">
-                <img src="{{ '/storage' . auth('web')->user()->image }}" alt="User Image" class="rounded-circle mb-2"
+                <img src="{{ '/storage' . auth()->user()?->image }}" alt="User Image" class="rounded-circle mb-2"
                     style="width: 80px; height: 80px;">
                 <!-- style="width: 80px; height: 80px; object-fit: cover" /> -->
-                <h5 class="mb-0" style="color: #ff6f61">{{ auth('web')->user()->name }}</h5>
+                <h5 class="mb-0" style="color: #ff6f61">{{ auth()->user()?->name }}</h5>
             </div>
 
             <!-- Sidebar Menu -->
@@ -37,9 +37,9 @@
             <section id="profile" class="content-section active">
                 <h2>User Profile</h2>
                 <div class="user-profile mb-3">
-                    <img src="{{ '/storage' . auth('web')->user()->image }}" alt="User Image"
+                    <img src="{{ '/storage' . auth()->user()?->image }}" alt="User Image"
                         class="profile-img rounded-circle" style="width: 100px; height: 100px;" />
-                    <span class="username">{{ auth('web')->user()->name }}</span>
+                    <span class="username">{{ auth()->user()?->name }}</span>
                 </div>
                 <br>
 
@@ -103,7 +103,7 @@
                                     <img src="/storage{{$post->images->first()?->path}}" alt="User Image" class="rounded-circle"
                                         style="width: 50px; height: 50px;" />
                                     <div class="ms-3">
-                                        <h5 class="mb-0">{{ auth()->user()->name }}</h5>
+                                        <h5 class="mb-0">{{ auth()->user()?->name }}</h5>
                                     </div>
                                 </div>
                                 <h4 class="post-title">{{ $post->title }}</h4>

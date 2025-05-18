@@ -61,9 +61,8 @@ class PostController extends Controller
     public function userPosts(Request $request)
     {
         $resource = $this->service->findAll(
-            ['user_id'=>auth()->user()->id ?? 1],
+            ['user_id' => auth()->user()->id ?? 1],
             ['images'],
-
             columns: ['id', 'title', 'slug', 'user_id', 'comment_able', 'number_of_views']
         );
 

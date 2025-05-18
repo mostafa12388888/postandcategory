@@ -19,9 +19,32 @@ class CategoryRepository extends MainRepository
     {
         return Category::class;
     }
-    public function index(){
+    /**
+     * index
+     *
+     * @return mixed
+     */
+    public function index():mixed
+    {
         return $this->model->get();
     }
+    /**
+     * categoryPostLimit
+     *
+     * @return mixed
+     */
+    public function categoryPostLimit():mixed
+    {
+        $categories= $this->model->get();
+         $categoryWithPost = $categories->map(
+             function ($category) {
+                 $category->posts = $category->posts()->limit(5)->get();
+                 return $category;
+             }
+         );
+         return $categoryWithPost;
+     }
+
 
 
 }
